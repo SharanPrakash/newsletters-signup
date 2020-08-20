@@ -15,34 +15,44 @@ app.get("/", function(req, res) {
 
 
 app.post("/", function(req, res) {
-    var firstName = req.body.fname;
-    var secondName = req.body.lname;
-    var emailId = req.body.email;
-    var data = {
-      members: [{
-        email_address: emailId,
-        status: "subscribed",
-        FNAME: firstName,
-        LNAME: secondName
-      }]
-    };
-    var jsonData = JSON.stringify(data);
+  var firstName = req.body.fname;
+  var secondName = req.body.lname;
+  var emailId = req.body.email;
+  var data = {
+    members: [{
+      email_address: emailId,
+      status: "subscribed",
+      FNAME: firstName,
+      LNAME: secondName
+    }]
+  };
+  var jsonData = JSON.stringify(data);
 
-    var options = {
-      url: "https://us17.api.mailchimp.com/3.0/lists/d0169a23d6",
-      method: "POST",
-      headers: {
-        "Authorization": "testing 59ff38e847e8a3c9765d5fe5a643023e-us17"
-      },
-      body: jsonData
-    };
-    request(options, function(error, response, body) {
-      if (error) {
-        console.log(error);
+  var options = {
+    url: "https://us17.api.mailchimp.com/3.0/lists/d0169a23d6",
+    method: "POST",
+    headers: {
+      "Authorization": "testing 59ff38e847e8a3c9765d5fe5a643023e-us17"
+    },
+    body: jsonData
+  };
+  request(options, function(error, response, body) {
+    if (error) {
+      res.sendFile(__dirname + "/failure.html");
+    } else {
+      if (response.statusCode == 200) {
+        res.sendFile(__dirname + "/success.html");
       } else {
-        console.log(response.statusCode);
-      };
-    });
+        res.sendFile(__dirname + "/failure.html");
+      }
+      console.log(response.statusCode);
+    }
+  });
+});
+
+app.post("/failure", function(req, res){
+
+  res.redirect("/");
 });
 
 
