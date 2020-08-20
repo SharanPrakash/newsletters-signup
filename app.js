@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const request = require('request');
-const port = process.env.PORT || 3000 ;
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -22,8 +22,10 @@ app.post("/", function(req, res) {
     members: [{
       email_address: emailId,
       status: "subscribed",
-      FNAME: firstName,
-      LNAME: secondName
+      merge_fields: {
+        FNAME: firstName,
+        LNAME: secondName
+      }
     }]
   };
   var jsonData = JSON.stringify(data);
