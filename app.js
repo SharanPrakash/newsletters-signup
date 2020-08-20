@@ -50,13 +50,13 @@ app.post("/", function(req, res) {
   });
 });
 
-app.post("/failure", function(req, res){
+app.post("/failure", function(req, res) {
 
   res.redirect("/");
 });
 
 
-app.listen(port, function(req, res) {
+app.listen(process.env.PORT || port, function(req, res) {
   console.log("Server is running on port 3000");
 });
 
